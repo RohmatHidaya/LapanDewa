@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('User') }}
+            {{ __('User Lists') }}
         </h2>
     </x-slot>
 
@@ -10,12 +10,13 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-secondary">Users list</h6>
-                        <a href="" class="btn btn-secondary mt-3" 
-                            x-data=""
-                            x-on:click.prevent="$dispatch('open-modal', 'create-user')">
-                            <span class="text">Add User</span>
-                        </a>
+                        <x-primary-button>
+                            <a href="" class="btn " 
+                                x-data=""
+                                x-on:click.prevent="$dispatch('open-modal', 'create-user')">
+                                <span class="text">Add User</span>
+                            </a>
+                        </x-primary-button>
                         @include('users.partials.create-user-form')
                     </div>
                     <x-status-notif type="success" :message="session('status')" />

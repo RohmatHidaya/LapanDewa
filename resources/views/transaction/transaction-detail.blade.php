@@ -26,12 +26,14 @@
                 <x-secondary-button>Kirim Struk</x-secondary-button>
                 <x-secondary-button>Cetak Struk</x-secondary-button>
 
-                <form action="{{ route('transaksi.showPayForm', $transaction->id) }}" method="post">
-                    @csrf
-                    <x-primary-button class="mt-2">
-                        Bayar
-                    </x-primary-button>
-                </form>
+                @if ($transaction->due_amount > 0)
+                    <form action="{{ route('transaksi.showPayForm', $transaction->id) }}" method="post">
+                        @csrf
+                        <x-primary-button class="mt-2">
+                            Bayar
+                        </x-primary-button>
+                    </form>
+                @endif
             </div>
         </div>
 
@@ -61,10 +63,11 @@
             <div class="text-right mt-4 space-y-1">
                 <p><span class="font-medium">Total:</span> <strong>Rp{{ number_format($transaction->total_price) }}</strong></p>
                 <p><span class="font-medium">Bayar:</span> <strong>Rp{{ number_format($transaction->paid_amount) }}</strong></p>
-                <p><span class="font-medium">Kembalian:</span> <strong>Rp{{ number_format($transaction->change_amount) }}</strong></p>
-                @if ($transaction->due_amount > 0)
-                    <p><span class="font-medium text-red-600">Sisa Kasbon:</span> Rp{{ number_format($transaction->due_amount) }}</p>
-                @endif
+                <p>
+                    {!! $transaction->due_amount > 0 
+                    ? '<span class="font-medium text-red-600">Sisa Kasbon:</span> Rp' . number_format($transaction->due_amount) 
+                    : '<span class="font-medium">Kembalian:</span> <strong>Rp' . number_format($transaction->change_amount) . '</strong>' !!}
+                </p>
             </div>
         </div>
     </div>
