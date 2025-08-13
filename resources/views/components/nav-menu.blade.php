@@ -17,3 +17,7 @@
 <x-nav-link :href="route('user')" :active="request()->routeIs('user')">
 {{ __('Users') }}
 </x-nav-link>
+
+<x-nav-link :href="route('laporan-keuangan')" :active="request()->routeIs('laporan-keuangan')">
+{{ __('Laporan Keuangan') }}
+</x-nav-link>

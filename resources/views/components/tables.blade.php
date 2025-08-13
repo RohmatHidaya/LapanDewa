@@ -7,11 +7,6 @@
                                         {{ $thead }}
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr class="text-left">
-                                        {{ $thead }}
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     <tr>
                                         {{ $slot }}

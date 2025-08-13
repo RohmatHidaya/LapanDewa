@@ -3,6 +3,11 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Kasir') }}
         </h2>
+        <div class="pt-3">
+            <a href="{{ route('laporan-keuangan.pemasukanHarian') }}">
+                <x-primary-button>Buat Laporan Penjualan Hari ini</x-primary-button>
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12">

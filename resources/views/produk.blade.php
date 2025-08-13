@@ -44,6 +44,7 @@
                             </tr>
                             @endforeach
                     </x-tables>
+                    {{ $products->links() }}
                 </div>
             </div>
         </div>

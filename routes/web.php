@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KasirController;
+use App\Http\Controllers\laporankeuanganController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProductController;
@@ -22,9 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/transaksi/{id}/bayar', [TransactionController::class, 'payOffKasbon'])->name('transaksi.payOffKasbon');
 });
 
-
-Route::get('/sbdashboard', function () {
-    return view('sbdashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/laporan-keuangan', [laporankeuanganController::class, 'index'])->name('laporan-keuangan');
+    Route::get('/laporan-keuangan/pemasukan-harian', [laporankeuanganController::class, 'pemasukanHarian'])->name('laporan-keuangan.pemasukanHarian');
+    Route::get('/laporan-keuangan/create', [laporankeuanganController::class, 'create'])->name('laporan-keuangan.create');
+    Route::post('/laporan-keuangan', [laporankeuanganController::class, 'store'])->name('laporan-keuangan.store');
 });
 
 Route::middleware('auth')->group(function () {
