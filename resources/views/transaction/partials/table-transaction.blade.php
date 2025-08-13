@@ -1,11 +1,11 @@
                     <x-tables>
                         <x-slot name="thead">
-                            <th>Nama</th>
-                            <th>Invoice Number</th>
-                            <th>Total(Rp)</th>
-                            <th>Bayar(Rp)</th>
-                            <th>Kembali(Rp)</th>
-                            <th>Tanggal Transaksi</th>
+                            <x-t-head> Nama </x-t-head>
+                            <x-t-head> Invoice Number </x-t-head>
+                            <x-t-head> Total(Rp) </x-t-head>
+                            <x-t-head> Bayar(Rp) </x-t-head>
+                            <x-t-head> Kembali(Rp) </x-t-head>
+                            <x-t-head> Tanggal Transaksi </x-t-head>
                         </x-slot>
                             @foreach ($transactions as $transaction)
                             <tr>
