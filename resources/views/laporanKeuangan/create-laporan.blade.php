@@ -8,13 +8,11 @@
 
         <div class="mt-6">
             <x-input-label :value="__('Kategori')" />
-            <x-text-input
-                name="kategori"
-                type="text"
-                class="mt-1 block w-3/4"
-                placeholder="{{ __('') }}"
-                required
-            />
+            <select name="kategori">
+                <option value="">Pilih Kategori</option>
+                <option value="pemasukan">Pemasukan</option>
+                <option value="pengeluaran">Pengeluaran</option>
+            </select>
             <x-input-error class="mt-2" :messages="$errors->get('kategori')" />
         </div>
 

@@ -15,6 +15,8 @@
 
     <x-status-notif type="error" :message="session('error')" />
     @include('laporanKeuangan.create-laporan')
+    <x-status-notif type="succes" :message="session('success')" />
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
