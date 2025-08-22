@@ -2,8 +2,9 @@
 <form method="POST" action="{{ route('kasir.checkout') }}">
     @csrf
     <div>
-        <x-input-label for="paid_amount" :value="__('Bayar')" />
-        <x-text-input id="paid_amount" name="paid_amount" type="number" class="mt-1 w-fit"  required autofocus />
+
+        <x-input-rupiah name="paid_amount" placeholder="Cth: 100000" label="Bayar" class="mt-1 w-fit" />
+
         <x-primary-button class="">
             {{ __('Bayar') }}
         </x-primary-button>

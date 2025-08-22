@@ -9,20 +9,8 @@
             </h2>
 
             <div class="mt-6">
-                <x-input-label for="payment" :value="__('Uang Diterima')" />
-
-                <x-text-input
-                    id="payment"
-                    name="payment"
-                    type="number"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Rp.') }}"
-                    :value="old('nama', $transaction->due_amount)"
-                    required
-                    autofocus
-                />
-
-            <x-input-error class="mt-2" :messages="$errors->get('payment')" />
+                <x-input-rupiah name="payment" placeholder="Cth10000" label="Uang Diterima" />
+                <x-input-error class="mt-2" :messages="$errors->get('payment')" />
             </div>
             <div class="mt-6 flex justify-end">
                 <x-secondary-button x-on:click="$dispatch('close')">

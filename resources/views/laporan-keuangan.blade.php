@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Laporan Keuangan') }}
+            {{ __('Rekap kas') }}
         </h2>
         <div class="pt-3">
             <a href="{{ route('laporan-keuangan.pemasukanHarian') }}">

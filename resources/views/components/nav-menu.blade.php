@@ -19,5 +19,5 @@
 </x-nav-link>
 
 <x-nav-link :href="route('laporan-keuangan')" :active="request()->routeIs('laporan-keuangan')">
-{{ __('Laporan Keuangan') }}
+{{ __('Rekap kas') }}
 </x-nav-link>

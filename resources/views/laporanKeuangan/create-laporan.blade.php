@@ -30,15 +30,9 @@
         </div>
 
         <div class="mt-6">
-            <x-input-label :value="__('Jumlah')" />
-            <x-text-input
-                name="jumlah"
-                type="number"
-                class="mt-1 block w-3/4"
-                placeholder="{{ __('Jumlah') }}"
-                :value="old('jumlah')"
-                required
-            />
+
+            <x-input-rupiah name="jumlah" placeholder="Contoh: 100000" label="Jumlah" />
+
             <x-input-error class="mt-2" :messages="$errors->get('jumlah')" />
         </div>
         <div class="mt-6 flex justify-end">
