@@ -12,5 +12,6 @@ export default defineConfig({
         outDir: "public/build", // hasil build ke public/build
         manifest: true, // penting! Laravel butuh ini
         emptyOutDir: true,
+        manifestDir: ".",
     },
 });
