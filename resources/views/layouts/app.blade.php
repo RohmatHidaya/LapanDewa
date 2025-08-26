@@ -11,12 +11,10 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Custom styles for this template-->
-        <link href="{{ asset('sbAdmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
-
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/LD.ico') }}">
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
