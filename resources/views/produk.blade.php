@@ -17,7 +17,7 @@
                             <span class="text">Add Product</span>
                         </a>
                         </x-primary-button>
-                        @include('product.partials.create-product-form')
+                        @include('product.partials.create-Product-form')
                     </div>
                     <x-status-notif type="success" :message="session('status')" />
                     <x-status-notif type="error" :message="session('destroy')" />
