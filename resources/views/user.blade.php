@@ -9,7 +9,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <div class="card-header py-3">
+                    <div class="card-header py-3 flex justify-between items-center">
+                        <div>
                         <x-primary-button>
                             <a href="" class="btn " 
                                 x-data=""
@@ -17,7 +18,14 @@
                                 <span class="text">Add User</span>
                             </a>
                         </x-primary-button>
+                        </div>
                         @include('users.partials.create-user-form')
+                        
+                        <div>
+                        <x-search-form 
+                            :action="route('user')"
+                        />
+                        </div>
                     </div>
                     <x-status-notif type="success" :message="session('status')" />
                     <x-status-notif type="error" :message="session('destroy')" />

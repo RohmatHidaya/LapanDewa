@@ -13,9 +13,22 @@ use function Laravel\Prompts\password;
 
 class UsersController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $users = User::orderBy('created_at', 'desc')->get();
+        // $users = User::orderBy('created_at', 'desc')->get();
+        $search = $request->query('q');
+
+        $users = User::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                      ->orWhere('role', 'like', '%' . $search . '%');
+                });
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
         return view('user', compact('users'));
     }
 

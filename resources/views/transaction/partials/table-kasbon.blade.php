@@ -1,4 +1,5 @@
-                    <x-tables>
+                {{ $kasbons->links() }}
+                   <x-tables>
                         <x-slot name="thead">
                             <th>Nama</th>
                             <th>Invoice Number</th>
@@ -26,3 +27,5 @@
                             </tr>
                             @endforeach
                     </x-tables>
+                {{ $kasbons->links() }}
+                

@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <div class="card-header pt-3 pb-4">
+                    <div class="card-header pt-3 pb-4 flex justify-between items-center">
                         <x-primary-button>
                         <a href="" class="btn " 
                             x-data=""
@@ -17,16 +17,25 @@
                             <span class="text">Add Product</span>
                         </a>
                         </x-primary-button>
+                        
+                        <x-search-form 
+                        :action="route('produk')"
+                        />
+                        
                         @include('product.partials.create-Product-form')
                     </div>
                     <x-status-notif type="success" :message="session('status')" />
                     <x-status-notif type="error" :message="session('destroy')" />
+                    
+                    
+
+
                     <x-tables>
                         <x-slot name="thead">
                             <th>Nama</th>
                             <th>Harga(Rp)</th>
                             <th>Stok</th>
-                            <th>Barcode</th>
+                            <th>Kode Produk</th>
                             <th>Expired</th>
                             <th>Action</th>
                         </x-slot>

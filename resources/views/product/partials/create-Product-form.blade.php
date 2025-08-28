@@ -56,7 +56,7 @@
             </div>
 
             <div class="mt-6">
-                <x-input-label for="barcode" :value="__('Product Barcode')" />
+                <x-input-label for="barcode" :value="__('Kode Produk')" />
 
                 <x-text-input
                     id="barcode"

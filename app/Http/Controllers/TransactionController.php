@@ -12,8 +12,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::where('status', 'paid')->latest()->get();
-        $kasbons = Transaction::where('status', 'on_credit')->latest()->get();
+        $transactions = Transaction::where('status', 'paid')->latest()->paginate(10);
+        $kasbons = Transaction::where('status', 'on_credit')->latest()->paginate(10);
         return view('transaksi', compact('transactions', 'kasbons'));
     }
 
