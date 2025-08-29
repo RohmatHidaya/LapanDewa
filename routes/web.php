@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/produk', [ProductController::class, 'index'])->name('produk');
+    Route::get('/produk/autocomplete', [ProductController::class, 'autocomplete'])->name('produk.autocomplete');
     Route::get('/produk/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
     Route::delete('/produk/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
     Route::put('/produk/{product}', [ProductController::class, 'update'])->name('product.update');
@@ -54,6 +55,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/user', [UsersController::class, 'index'])->name('user');
+    Route::get('/user/autocomplete', [UsersController::class, 'autocomplete'])->name('user.autocomplete');
     Route::get('/user/{user}/edit', [UsersController::class, 'edit'])->name('users.edit');
     Route::patch('/user/{user}', [UsersController::class, 'update'])->name('users.update');
     Route::put('/user/{user}', [UsersController::class, 'passwordUpdate'])->name('users.passwordUpdate');

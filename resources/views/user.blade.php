@@ -24,6 +24,9 @@
                         <div>
                         <x-search-form 
                             :action="route('user')"
+                            :autocomplete="true"
+                            :endpoint="route('user.autocomplete')"
+                            placeholder="Cari"
                         />
                         </div>
                     </div>

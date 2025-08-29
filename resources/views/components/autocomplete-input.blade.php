@@ -1,108 +1,93 @@
 @props([
-    'action' => '#',
-    'placeholder' => 'Search...',
     'name' => 'q',
-    // Autocomplete props
-    'autocomplete' => false,
+    'value' => null,
+    'placeholder' => 'Search...',
     'endpoint' => null,
     'minChars' => 1,
     'debounceMs' => 200,
-    // Generic mapping keys (optional). If null, expects API to return 'label', 'value', 'meta', 'description'
+    // Mapping keys (opsional). Jika null, komponen mengharapkan API return 'label', 'value', 'meta', 'description'.
     'labelKey' => null,
     'valueKey' => null,
     'metaKey' => null,
     'descriptionKey' => null,
+    // Submit form induk saat memilih item
+    'submitOnSelect' => false,
+    // Atur atribut tambahan input jika diperlukan
+    'inputClass' => 'border rounded px-3 py-2 w-full',
 ])
 
 @php
-    $initialQuery = request($name);
+    $initialValue = old($name, $value);
 @endphp
 
-<form method="GET" action="{{ $action }}" class="mb-4"
-    @if($autocomplete)
-        x-data="autocompleteSearch({
-            endpoint: '{{ $endpoint }}',
-            minChars: {{ (int)$minChars }},
-            debounceMs: {{ (int)$debounceMs }},
-            initialQuery: @js($initialQuery),
-            labelKey: @js($labelKey),
-            valueKey: @js($valueKey),
-            metaKey: @js($metaKey),
-            descriptionKey: @js($descriptionKey),
-        })"
-        x-init="init()"
-        @click.outside="close()"
-    @endif
+<div class="relative w-fit sm:w-72"
+    x-data="autocompleteInput({
+        endpoint: '{{ $endpoint }}',
+        minChars: {{ (int)$minChars }},
+        debounceMs: {{ (int)$debounceMs }},
+        initialValue: @js($initialValue),
+        labelKey: @js($labelKey),
+        valueKey: @js($valueKey),
+        metaKey: @js($metaKey),
+        descriptionKey: @js($descriptionKey),
+        submitOnSelect: {{ $submitOnSelect ? 'true' : 'false' }},
+    })"
+    x-init="init()"
+    @click.outside="close()"
 >
-    <div class="flex items-center gap-2">
-        <div class="relative w-fit sm:w-72">
-            <input 
-                type="text" 
-                name="{{ $name }}" 
-                value="{{ $initialQuery }}" 
-                placeholder="{{ $placeholder }}" 
-                class="border rounded px-3 py-2 w-full"
-                @if($autocomplete)
-                    x-model="query"
-                    @input.debounce.{{ (int)$debounceMs }}ms="onInput"
-                    @keydown.down.prevent="highlightNext()"
-                    @keydown.up.prevent="highlightPrev()"
-                    @keydown.enter.prevent="onEnter()"
-                    autocomplete="off"
-                @endif
-            />  
+    <input
+        type="text"
+        name="{{ $name }}"
+        value="{{ $initialValue }}"
+        placeholder="{{ $placeholder }}"
+        class="{{ $inputClass }}"
+        x-model="query"
+        @input.debounce.{{ (int)$debounceMs }}ms="onInput"
+        @keydown.down.prevent="highlightNext()"
+        @keydown.up.prevent="highlightPrev()"
+        @keydown.enter.prevent="onEnter()"
+        autocomplete="off"
+    />
 
-            @if($autocomplete)
-            <!-- Suggestions dropdown -->
-            <div
-                class="absolute left-0 top-full mt-1 w-full bg-white border rounded shadow z-20 max-h-72 overflow-auto"
-                x-show="open"
-                x-transition
-                @mousedown.prevent
-            >
-                <template x-if="loading">
-                    <div class="p-3 text-sm text-gray-500">Loading...</div>
-                </template>
+    <!-- Dropdown saran -->
+    <div class="absolute left-0 top-full mt-1 w-full bg-white border rounded shadow z-20 max-h-72 overflow-auto"
+        x-show="open"
+        x-transition
+        @mousedown.prevent
+    >
+        <template x-if="loading">
+            <div class="p-3 text-sm text-gray-500">Loading...</div>
+        </template>
 
-                <template x-if="!loading && suggestions.length === 0 && query.length >= minChars">
-                    <div class="p-3 text-sm text-gray-500">Tidak ada hasil</div>
-                </template>
+        <template x-if="!loading && suggestions.length === 0 && query.length >= minChars">
+            <div class="p-3 text-sm text-gray-500">Tidak ada hasil</div>
+        </template>
 
-                <ul>
-                    <template x-for="(item, idx) in suggestions" :key="item.id">
-                        <li>
-                            <button type="button"
-                                class="w-full text-left px-3 py-2 hover:bg-gray-100"
-                                :class="{ 'bg-gray-100': idx === highlighted }"
-                                @mouseenter="highlighted = idx"
-                                @mouseleave="highlighted = -1"
-                                @click="select(item)"
-                            >
-                                <div class="flex items-center justify-between">
-                                    <span class="font-medium" x-text="displayLabel(item)"></span>
-                                    <span class="text-xs text-gray-500" x-text="displayMeta(item)"></span>
-                                </div>
-                                <div class="text-xs text-gray-600" x-text="displayDescription(item)"></div>
-                            </button>
-                        </li>
-                    </template>
-                </ul>
-            </div>
-            @endif
-        </div>
-
-        @if(request($name))
-            <a href="{{ $action }}" class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded text-gray-700">Reset</a>
-        @endif
-
-        <x-primary-button>Search</x-primary-button>
+        <ul>
+            <template x-for="(item, idx) in suggestions" :key="item.id ?? idx">
+                <li>
+                    <button type="button"
+                        class="w-full text-left px-3 py-2 hover:bg-gray-100"
+                        :class="{ 'bg-gray-100': idx === highlighted }"
+                        @mouseenter="highlighted = idx"
+                        @mouseleave="highlighted = -1"
+                        @click="select(item)"
+                    >
+                        <div class="flex items-center justify-between">
+                            <span class="font-medium" x-text="displayLabel(item)"></span>
+                            <span class="text-xs text-gray-500" x-text="displayMeta(item)"></span>
+                        </div>
+                        <div class="text-xs text-gray-600" x-text="displayDescription(item)"></div>
+                    </button>
+                </li>
+            </template>
+        </ul>
     </div>
-</form>
+</div>
 
-@if($autocomplete)
 <script>
-    if (!window.autocompleteSearch) {
-        window.autocompleteSearch = function ({ endpoint, minChars = 1, debounceMs = 200, initialQuery = '', labelKey = null, valueKey = null, metaKey = null, descriptionKey = null }) {
+    if (!window.autocompleteInput) {
+        window.autocompleteInput = function ({ endpoint, minChars = 1, debounceMs = 200, initialValue = '', labelKey = null, valueKey = null, metaKey = null, descriptionKey = null, submitOnSelect = false }) {
             return {
                 endpoint,
                 minChars,
@@ -111,7 +96,8 @@
                 valueKey,
                 metaKey,
                 descriptionKey,
-                query: initialQuery || '',
+                submitOnSelect,
+                query: initialValue || '',
                 open: false,
                 loading: false,
                 suggestions: [],
@@ -137,15 +123,20 @@
                     if (this.highlighted >= 0 && this.suggestions[this.highlighted]) {
                         this.select(this.suggestions[this.highlighted]);
                     } else {
-                        // Submit the form normally
-                        this.$root.submit();
+                        if (this.submitOnSelect) {
+                            const form = this.$root.closest('form');
+                            if (form) form.submit();
+                        }
                     }
                 },
                 select(item) {
+                    // Nilai input yang dikirim (misal barcode untuk kasir) diambil dari valueKey/value
                     this.query = this.getValue(item);
                     this.open = false;
-                    // Submit to the listing with selected term
-                    this.$root.submit();
+                    if (this.submitOnSelect) {
+                        const form = this.$root.closest('form');
+                        if (form) form.submit();
+                    }
                 },
                 async fetchSuggestions() {
                     try {
@@ -169,17 +160,15 @@
                         this.loading = false;
                     }
                 },
-                // Helpers for mapping
+                // Mapping helpers
                 getValue(item) {
                     if (this.valueKey && item[this.valueKey] != null) return item[this.valueKey];
                     if (item.value != null) return item.value;
-                    // fallback ke label jika tidak ada
                     return this.getLabel(item);
                 },
                 getLabel(item) {
                     if (this.labelKey && item[this.labelKey] != null) return item[this.labelKey];
                     if (item.label != null) return item.label;
-                    // fallback umum: nama/name
                     return item.nama ?? item.name ?? '';
                 },
                 getMeta(item) {
@@ -197,4 +186,3 @@
         }
     }
 </script>
-@endif

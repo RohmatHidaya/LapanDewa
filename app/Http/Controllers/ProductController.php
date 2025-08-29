@@ -77,4 +77,41 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('produk')->with('destroy', 'Product Deleted');
     }
+
+    /**
+     * Autocomplete endpoint for product search.
+     * Returns JSON array of products matching the query.
+     */
+    public function autocomplete(Request $request)
+    {
+        $q = trim($request->query('q', ''));
+        if ($q === '' || mb_strlen($q) < 1) {
+            return response()->json([]);
+        }
+
+        $products = Product::query()
+            ->where(function ($query) use ($q) {
+                $query->where('nama', 'like', '%' . $q . '%')
+                      ->orWhere('barcode', 'like', '%' . $q . '%');
+            })
+            ->orderBy('nama')
+            ->limit(8)
+            ->get(['id', 'nama', 'barcode', 'harga']);
+
+        $results = $products->map(function ($p) {
+            return [
+                'id' => $p->id,
+                'nama' => $p->nama,
+                'barcode' => $p->barcode,
+                'harga' => $p->harga,
+                // Generic keys for reusable autocomplete components
+                'label' => $p->nama,
+                'value' => $p->nama,
+                'meta' => '#' . $p->barcode,
+                'description' => 'Rp' . number_format($p->harga, 0, ',', '.'),
+            ];
+        })->values();
+
+        return response()->json($results);
+    }
 }

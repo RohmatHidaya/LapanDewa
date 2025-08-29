@@ -20,6 +20,9 @@
                         
                         <x-search-form 
                         :action="route('produk')"
+                        :autocomplete="true"
+                        :endpoint="route('produk.autocomplete')"
+                        placeholder="Cari produk (nama atau barcode)"
                         />
                         
                         @include('product.partials.create-Product-form')

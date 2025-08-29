@@ -96,5 +96,24 @@ class UsersController extends Controller
     return redirect()->route('user')->with('status', 'User Added');
    }
 
+    public function autocomplete(Request $request)
+    {
+        $q = trim($request->query('q', ''));
+        if ($q === '' || mb_strlen($q) < 1) {
+            return response()->json([]);
+        }
+
+        $results = User::query()
+            ->where(function ($query) use ($q) {
+                $query->where('name', 'like', '%' . $q . '%')
+                      ->orWhere('email', 'like', '%' . $q . '%');
+            })
+            ->orderBy('name')
+            ->limit(8)
+            ->get(['id', 'name', 'email', 'role']);
+
+        return response()->json($results);
+    }
+
     
 }
