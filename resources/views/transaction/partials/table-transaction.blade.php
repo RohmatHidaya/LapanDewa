@@ -1,4 +1,3 @@
-            {{ $kasbons->links() }}
                  <x-tables>
                         <x-slot name="thead">
                             <x-t-head> Nama </x-t-head>
@@ -27,5 +26,4 @@
                             </tr>
                             @endforeach
                     </x-tables>
-                {{ $kasbons->links() }}
                 

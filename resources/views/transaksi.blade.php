@@ -24,12 +24,14 @@
                         <div>
                             @include('transaction.partials.table-kasbon')
                         </div>
+                        {{ $transactions->links() }}
                     </template>
 
                     <template x-if="tab === 'transaction'">
                         <div>
                             @include('transaction.partials.table-transaction')
                         </div>
+                        {{ $transactions->links() }}
                     </template>
                 </div>
             </div>
