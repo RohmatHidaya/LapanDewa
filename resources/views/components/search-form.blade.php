@@ -143,6 +143,7 @@
                 },
                 select(item) {
                     this.query = this.getValue(item);
+                    this.$root.querySelector('input[name="{{ $name }}"]').value = this.getValue(item);
                     this.open = false;
                     // Submit to the listing with selected term
                     this.$root.submit();

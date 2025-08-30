@@ -132,6 +132,7 @@
                 select(item) {
                     // Nilai input yang dikirim (misal barcode untuk kasir) diambil dari valueKey/value
                     this.query = this.getValue(item);
+                    this.$root.querySelector('input[name="{{ $name }}"]').value = this.getValue(item);
                     this.open = false;
                     if (this.submitOnSelect) {
                         const form = this.$root.closest('form');

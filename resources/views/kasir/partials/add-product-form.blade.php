@@ -6,7 +6,7 @@
         <x-autocomplete-input
             name="barcode"
             :endpoint="route('produk.autocomplete')"
-            placeholder="Ketik nama atau barcode"
+            placeholder=""
             :submitOnSelect="true"
             valueKey="barcode"
             labelKey="nama"
