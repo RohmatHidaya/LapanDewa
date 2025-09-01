@@ -11,7 +11,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+                    <div class="flex flex-wrap gap-6">
+                        <x-stat-card title="Laporan Harian" color="blue" :value="$harian" :date="now()" formatdate="dmy"/>
+                        <x-stat-card title="Laporan Bulanan" color="green" :value="$bulanan" :date="now()" formatdate="my"/>
+                        <x-stat-card title="Laporan Tahunan" color="red" :value="$tahunan" :date="now()" formatdate="y"/>
+                        <x-stat-card title="Pendapatan Bersih" color="blue" :value="$pendapatanLastMonth-$pengeluaranLastMonth" :date="now()->subMonth()" formatdate="my"/>
+
+                    </div>
                 </div>
             </div>
         </div>

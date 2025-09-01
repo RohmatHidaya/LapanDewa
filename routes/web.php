@@ -1,20 +1,19 @@
 <?php
 
-use App\Http\Controllers\KasirController;
-use App\Http\Controllers\laporankeuanganController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KasirController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\laporankeuanganController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/transaksi', [TransactionController::class, 'index'])->name('transaksi');
