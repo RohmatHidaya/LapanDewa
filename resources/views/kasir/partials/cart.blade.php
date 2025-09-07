@@ -13,7 +13,7 @@
             <form method="POST" action="{{ route('kasir.quantity', $item['id']) }}">
                 @csrf
                 @method('patch')
-                <x-text-input id="quantity" name="quantity" type="number" class="w-12 p-0 text-center" :value="$item['quantity']"  />
+                <x-text-input id="quantity" name="quantity" type="number" step="0.01" class="w-12 p-0 text-center" :value="$item['quantity']"  />
             </form>
         </td>
         <td>{{ number_format($item['subtotal'], 0, ',', '.') }}</td>
