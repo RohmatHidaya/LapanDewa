@@ -31,6 +31,5 @@
         "DB_DATABASE": "db2024_stormtorn",
         "DB_USERNAME": "if0_39989959",
         "DB_PASSWORD": "ZSNorKnhZDfzzB"
-    },
-    "OutputDirectory": "public"
+    }
 }
