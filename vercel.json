@@ -5,8 +5,22 @@
         "api/index.php": { "runtime": "vercel-php@0.7.4" }
     },
     "routes": [
-        { "src": "/build/(.*)", "dest": "/public/build/$1" },
-        { "src": "/(.*)", "dest": "/api/index.php" }
+        {
+            "src": "/favicon.ico",
+            "dest": "/public/favicon.ico"
+        },
+        {
+            "src": "/robots.txt",
+            "dest": "/public/robots.txt"
+        },
+        {
+            "src": "/(css|js|images|fonts|storage)/(.*)",
+            "dest": "/public/$1/$2"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/public/index.php"
+        }
     ],
     "buildCommand": "npm run build",
     "outputDirectory": "public/build",
