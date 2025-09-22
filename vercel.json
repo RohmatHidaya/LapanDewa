@@ -6,12 +6,12 @@
     },
     "builds": [
     { "src": "public/index.php", "use": "@vercel/php" },
-    { "src": "vite.config.js", "use": "@vercel/static-build" }
+    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "public/build" } }
   ],
     "routes": [
         {
             "src": "/favicon.ico",
-            "dest": "/public/favicon.ico"
+            "dest": "/public/images/favicon.ico"
         },
         {
             "src": "/robots.txt",
@@ -23,16 +23,14 @@
         },
         {
             "src": "/build/(.*)",
-            "dest": "/public/build/$1"
+            "dest": "/assets/$1"
         },
-        {
+                {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
     ],
-    "buildCommand": "npm run build",
-    "outputDirectory": "public/build",
-    "env": {
+            "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_URL": "https://lapan-dewa.vercel.app",
